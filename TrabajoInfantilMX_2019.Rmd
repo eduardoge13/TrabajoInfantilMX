@@ -1,6 +1,6 @@
 ---
 title: "Trabajo Infantil" 
-author: "Eduardo Gaitán Escalante\nEric Oziel Hernandez Salinas " 
+author: "Eduardo Gaitán Escalante \nEric Oziel Hernandez Salinas " 
 date: "`r Sys.Date()`" 
 #output: pdf_document 
 output: html_document
@@ -8,56 +8,71 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/eduar/Downloads/Tareas 8/prueba/TrabajoInfantilMX/")
+
 ```
 
-```{r library, warning=FALSE,message=FALSE, include=FALSE}
+```{r dependencies, warning=FALSE,message=FALSE, include=FALSE}
 library(foreign)
 library(dplyr)
 library(ggplot2)
 library(mfx)
 
-#library(tidyverse) --> solo se usa dplyr y ggplot2 para los graficos, libreria pesada
+library(tidyverse) #--> solo se usa dplyr y ggplot2 para los graficos, libreria pesada
 library(psych)
 library(nnet)
 library(stargazer)
+#library(kableExtra)
+#library(webshot)
+#library(magick)
+#webshot::install_phantomjs()
+
 
 ```
 
-# Proyecto Econometria 2022-1
+
+
+
+# Trabajo Infantil en México 2019: una aproximación a sus determinantes esenciales.
 
 ------------------------------------------------------------------------
 
 ## Introducción
 
-En el presente documento se aspira realizar una investigación sobre el trabajo infantil en México, tomando en cuenta algunas variables analizadas para la población de 5 a 17 años obtenidas de los microdatos de la Encuesta Nacional de Trabajo Infantil (ENTI 2019) del **INEGI.** Por lo que para analizar la base filtraremos de la base original variables de corte socioeconómico e intrafamiliar determinantes para la condición de trabajo infantil CTI como variable dependiente, así como, las omisiones, datos nulos, cuestionarios incompletos y categorías no especificadas, hasta conformar una submuestra.
+En el presente documento se aspira realizar una investigación sobre el trabajo infantil en México, tomando en cuenta algunas variables analizadas para la población de 5 a 17 años obtenidas de los microdatos de la Encuesta Nacional de Trabajo Infantil (ENTI 2019) del **INEGI.** Por lo que para analizar la base filtraremos de la base original variables de corte socioeconómico e intrafamiliar determinantes para la Condición de Trabajo Infantil (CTI) como variable dependiente, así como, las omisiones, datos nulos, cuestionarios incompletos y categorías no especificadas, hasta conformar una submuestra.
 
-Segundo, se realizará una descripción estadistica de la base de datos y tambien de la submuestra, asi como un analisis de la muestra para que podamos observar la estructura y distribución de los datos y a que nivel de representatividad llegamos. Posteriormente, integramos un modelo logit multinomial con las variables seleccionadas, donde se analice la condición de ocupación de los infantes y con regresores socioeconómicos e intrafamiliares que consideramos tienen un mayor impacto en la determinación de su condicion de ocupación, ya sea no permitida, peligrosa o no permitida y permitida. Finalmente se concluye con algunos resultados y reflexiones sobre el trabajo infantil en México en 2019, los retos y propuestas a implementar.
+Segundo, se realizará una descripción estadística de la base de datos y también de la submuestra, asi como un análisis de la muestra para que podamos observar la estructura y distribución de los datos y a que nivel representativo llegamos. Posteriormente, integramos un modelo logit multinomial con las variables seleccionadas, donde se analice la condición de ocupación de los infantes y con regresores socioeconómicos e intrafamiliares que consideramos tienen un mayor impacto en la determinación de su condición de ocupación, ya sea no permitida, peligrosa o no permitida y permitida. 
 
-## Trabajo infantil en México y revision de la literatura
+Los efectos marginales muestran los resultados finales del modelo. La edad demuestra ser de gran relevancia para estar fuera del trabajo infantil (4); a su vez es 1.75 veces más probable que siendo hombre este en CTI, es 2.16 veces más probable que los infantes que cumplan con la condición CTI tengan la necesidad de asistir a la escuela y es mucho menor la probabilidad de estar en CTI si se asiste a la escuela. Finalmente el nivel de escolaridad incrementa en 1.3 veces la necesidad de estar en CTI y asistir a la escuela, de nuevo apuntando a la tesis de que la escolaridad esta relacionada con el trabajo infantil, probablemente estas condiciones se deban a que el infante necesita financiamiento para sus estudios, así mismo, un nivel de escolaridad mayor aumenta en 0.72 veces la probabilidad de estar fuera de CTI.
+
+Finalmente se concluye con algunos resultados y reflexiones sobre el trabajo infantil en México en 2019, los retos y propuestas a implementar.
+
+
+## Trabajo infantil en México y revisión de la literatura
 
 En México el trabajo infantil en una definición amplia, es definido por el INEGI como aquella en la que "Los niños y niñas en formas de trabajo prohibidas, en tipos de trabajo que es preciso eliminar por ser social y moralmente indeseables" en este trabajo retomamos esta definición para la variable dependiente.
 
-De acuerdo con Bando, Lopez-Calva y otros (2005), es relevante para el trabajo infantil (en su investigacion de poblacion indigena en México) considerar las características familiares, en especial la edad y el tamaño de la familia, además de ser un factor que responde a los salarios de los adultos. Asimismo, las familias más pobres son las que demandan más trabajo infantil, situación que los hace propensos a dejar la escuela.
+De acuerdo con Bando, López-Calva y otros (2005), es relevante para el trabajo infantil (en su investigación de población indígena en México) considerar las características familiares, en especial la edad y el tamaño de la familia, además de ser un factor que responde a los salarios de los adultos. Asimismo, las familias más pobres son las que demandan más trabajo infantil, situación que los hace propensos a dejar la escuela.
 
-Por su parte, desde otra corriente de pensamiento Becker (1991:137) menciona que, las familias deciden como dividir el ingreso entre la cantidad de hijos lo que tambien determina su estatus en el trabajo o la asistencia escolar, cómo la oferta laboral de los niños se determina en función de la calidad y cantidad del ingreso de acuerdo con el número de hijos.
+Por su parte, desde otra corriente de pensamiento Becker (1991:137) menciona que, las familias deciden como dividir el ingreso entre la cantidad de hijos lo que también determina su estatus en el trabajo o la asistencia escolar, cómo la oferta laboral de los niños se determina en función de la calidad y cantidad del ingreso de acuerdo con el número de hijos.
 
-Para el caso de México los informes sobre condiciones deporables de trabajo infantil es reciente, resaltando las actividades pertinentes encaminandas a combatir las peores formas de trabajo infantil, desde las cuales se trata de ratificar en el T-MEC entre México, Estados Unidos y Cánada que se apoya con la enmienda de la Ley General de Educación, en busca de fortalecer el acceso a la educación para niños provenientes de grupos marginados.
+Para el caso de México los informes sobre condiciones deplorables de trabajo infantil es reciente, resaltando las actividades pertinentes encaminadas a combatir las peores formas de trabajo infantil, desde las cuales se trata de ratificar en el T-MEC entre México, Estados Unidos y Canadá que se apoya con la enmienda de la Ley General de Educación, en busca de fortalecer el acceso a la educación para niños provenientes de grupos marginados.
 
-Por parte del gobierno se combate desde la forma jurídica con demandas a la trata de menores, así como creando una nueva protección de niñas, niños y adolescentes, con propósitos de eliminar el trabajo infantil para 2019-2024. Además, incentivando en el levantamiento de la Encuesta Nacional de Trabajo Infantil 2019( ENTI) que mejora y complementa la información sobre las condiciones múltiples que determinan la incorporación de infantes al trabajo infantil; además de ser primordial para el tratamiento de los datos a utilizar en esta investigación. No obstante, los infantes mexicanos entre las peores formas de ocupación de trabajo infantil es la explotación sexual con fines comerciales, tareas en la agricultura por diversas condiciones no aptas para menores, entre otros(Bureau of International Labor Affairs, 2020).
+Por parte del gobierno se combate desde la forma jurídica con demandas a la trata de menores, así como creando una nueva protección de niñas, niños y adolescentes, con propósitos de eliminar el trabajo infantil para 2019-2024. Además, incentivando en el levantamiento de la Encuesta Nacional de Trabajo Infantil 2019( ENTI) que mejora y complementa la información sobre las condiciones múltiples que determinan la incorporación de infantes al trabajo infantil; además de ser primordial para el tratamiento de los datos a utilizar en esta investigación. No obstante, los infantes mexicanos entre las peores formas de ocupación de trabajo infantil es la explotación sexual con fines comerciales, tareas en la agricultura por diversas condiciones no aptas para menores, entre otros (Bureau of International Labor Affairs, 2020).
 
-En la evidencia para México Pedro Orraca (2014), encuentra que el orden de nacimiento de los hijos, las discrepancias entre los hijos y la asignación de tiempo entre tareas escolares y laborales que mayormente trabajan a no asisten a la escuela tambien son relevantes para ver si los infantes estan dentro del trabajo infantil.
+En la evidencia para México Pedro Orraca (2014), encuentra que el orden de nacimiento de los hijos, las discrepancias entre los hijos y la asignación de tiempo entre tareas escolares y laborales que mayormente trabajan a no asisten a la escuela también son relevantes para ver si los infantes están dentro del trabajo infantil.
 
-Además, Alcaraz et al. (2010) encuentran relevante en sus resultados que una reducción significativa de las remesas causa un incremento en el trabajo infantil, aumentando la derserción escolar y reafirmando la importancia del ingreso de los adultos en el hogar.
+Además, Alcaraz et al. (2010) encuentran relevante en sus resultados que una reducción significativa de las remesas causa un incremento en el trabajo infantil, aumentando la deserción escolar y reafirmando la importancia del ingreso de los adultos en el hogar.
 
 Para la OIT el trabajo infantil es "aquel que priva a los niños de su infancia, de su potencial y de su dignidad, y es perjudicial para su desarrollo físico y mental" (OIT, 2002, p. 16)
 
-## Hipotesis
+## Hipótesis
 
 Por su parte, analizando el modelo pasamos a la formación de la prueba de hipótesis del modelo multinomial, en la que la condición de trabajo infantil bajo las tres categorías a señalar es que en nuestra hipótesis nula sea igual a 0.
 
 $$H0: \beta_1,\beta_2,\beta_3 = 0$$
 
-Mientras la hipótesis altenativa responde a que las betas seleccionadas sean distintas de cero.
+Mientras la hipótesis alternativa responde a que las betas seleccionadas sean distintas de cero.
 
 $$
 H1: \beta_1,\beta_2,\beta_3 \neq 0
@@ -65,34 +80,16 @@ $$
 
 ```{r base, echo=FALSE}
 
-df = read.dbf(here::here("C:/Users/eduar/Downloads/Tareas 8/Econometria II/Proyecto/enti_2019_data/ENTI2019_SDEM.DBF"),
+baseSDEM = read.dbf(here::here("C:/Users/eduar/Downloads/Tareas 8/Econometria II/Proyecto/enti_2019_data/ENTI2019_SDEM.DBF"),
               as.is = FALSE)
 
-base = df[,c(30:36,39:41,46,49)]
-```
-
-```{r rename, echo=FALSE}
-base_final <- base %>% 
-  rename("Cuestionario" = R_DEF_CB)  %>% 
-  rename("Edad" = EDA1) %>%
-  rename("Asistencia_esc"= ASIS) %>%
-  rename("No_asistencia"= N_ASI_POR) %>%
-  rename("Nivel_escolaridad"= N_ESC) %>%
-  rename("Tipo_apoyo" = T_APO1)%>%
-  rename("Condicion_ocup" = C_OCU) %>%
-  rename("Condicion_t_infantil" = CTI) %>%
-  rename("Posición_ocup"=POS_OCU2) %>%
-  rename("Stor_actividad"=S_ACT) %>%
-  rename("Nivel_ingreso"=NIV_ING) %>%
-  rename("Persona_bajo_trabajo"= T_PER)
-
 
 ```
 
-## Descripcion de la base
+## Descripción de la base
 
-```{r graficas, echo=FALSE}
-g1 <- df %>% 
+```{r graficas, echo=FALSE, message=FALSE}
+g1 <- baseSDEM %>% 
   mutate( H_QD2=as.integer(H_QD))%>% 
   filter(H_QD2!=4&H_QD2!=0) %>% 
   group_by(H_QD2) %>% 
@@ -108,33 +105,90 @@ g1 <- df %>%
   
   
   g1
+ggsave("Trabajo Infantil en México; Horas en quehaceres domesticos.png", device = "png", path = "./images")
 
 ##############
 ```
 
-Vemos que, de los datos proporcionados por el INEGI (sin filtrar), en 2019 la cantidad de infantes que trabajaban al menos 14 horas era de 58,158 y más preocupante es que existan aún las 2602 observaciones que estan trabajando de entre 14 y 28 horas.
+Vemos que, de los datos proporcionados por el INEGI (sin filtrar), en 2019 la cantidad de infantes que trabajaban al menos 14 horas era de 58,158 y más preocupante es que existan aún las 2602 observaciones que están trabajando de entre 14 y 28 horas.
+
+```{r homeplot, echo=FALSE, message=FALSE}
+
+
+homeplot <- baseSDEM %>% 
+   filter(as.numeric(EDA)<=18 & as.numeric(EDA)>=5 & R_DEF_CB == "00" & C_OCU != "4") %>%
+  group_by(SEX) %>% 
+  ggplot(aes(x = as.factor(CQDOM), fill = SEX))+
+  scale_x_discrete(labels=c("Condiciones adecuadas","Horarios prolongados","Condiciones peligrosas","No realiza quehaceres
+domésticos"))+
+  stat_count()+
+    stat_count(geom = "text", color='darkblue', aes(label=..count..), position =position_jitter(width=0.5,height=0.5))+
+    labs(title = "Numero de niños ocupados, por sexo, en CQDOM*, México 2019", caption = "Rosa: Hombres; Azul: Mujeres; *Condicion de quehaceres domesticos\nFuente: Elaboración propia con datos del la Encuesta Nacional de Trabajo Infantil (ENTI) 2019", y = "Numero", x= "Condicion de quehaceres domesticos")
+  
+ 
+homeplot
+ggsave("Trabajo Infantil en México; Condicion de quehaceres domesticos.png", device = "png", path = "./images")
+```
+
+En la segunda gráfica podemos ver más claramente como en la condición de quehaceres domésticos tanto hombres como mujeres se encuentran en quehaceres domésticos con condiciones adecuadas, sin embargo es preocupante observar que aun más de 500 infantes de la submuestra se encuentran en horarios prolongados o condiciones peligrosas. Finalmente podemos ver que las mujeres son menos propensas a estar exentas de trabajo domestico.
+
+```{r edadesplot, echo=FALSE, message=FALSE}
+p1 <- baseSDEM %>%
+   filter(as.numeric(EDA)<=18 & as.numeric(EDA)>=5 & R_DEF_CB == "00" & C_OCU != "4") %>%
+  ggplot(aes(x = EDA, fill = SEX))+
+  stat_count()+
+  stat_count(geom = "text", color='darkblue', aes(label=..count..))
+
+p1 + 
+  labs(title = "Histograma de edades de niños ocupados, por sexo, México, 2019",
+       x = "Años", y = "Numero", caption = "Rosa: Hombres; Azul: Mujeres\nFuente: Elaboración propia con datos del la Encuesta Nacional de Trabajo Infantil (ENTI) 2019")
+ggsave("Trabajo Infantil en México;  Edades de niños ocupados.png", device = "png", path = "./images")
+```
+
+La tercera gráfica nos demuestra la relación de la edad de los infantes con su condición de ocupación. Entre mayor edad, existe una mayor cantidad de niños ocupados, es decir que la economía requiere de fuerza de trabajo infantil y cada que se acercan a su edad propia para trabajar como adultos, se demanda mayor cantidad del mismo, aun en condiciones impropias.
+
+```{r sexplot, echo=FALSE, message=FALSE}
+sexplot <- baseSDEM %>%
+  filter(as.numeric(EDA)<=18 & as.numeric(EDA)>=5 & R_DEF_CB == "00" & C_OCU != "4") %>%
+  group_by(SEX) %>% 
+  ggplot(aes(x=SEX, fill=SEX))
+
+sexplot + 
+  geom_bar( color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_classic()+
+  scale_x_discrete(labels = c("Hombre", "Mujer"))+
+  stat_count(geom = "text", color='darkblue', aes(label=..count..))+
+  labs(title = "Numero de niños ocupados, por sexo, México 2019",
+       y = "Numero",
+       caption = "Rosa: Hombres; Azul: Mujeres\nFuente: Elaboración propia con datos del la Encuesta Nacional de Trabajo Infantil (ENTI) 2019")
+
+ggsave("Trabajo Infantil en México; Cantidad de niños ocupados, por sexo.png", device = "png", path = "./images")
+```
+
+Finalmente observamos que la mayor parte de los infantes que trabaja son varones, mientras que las mujeres infantes ocupadas representan solo la mitad. Esto podría indicarnos la tendencia de los hogares mexicanos a otorgar el papel de proveedor y trabajador a los varones sobre las mujeres y en consecuencia a solicitarlos para el trabajo.
 
 ## Procesamiento de los datos y explicación de la submuestra
 
-Para obtener la submuestra, filtramos por condición de cuestionario completado y por condicion de ocupación para poder ver cuales son los infantes que contestaron el cuestionario, que son ocupados, filtramos tambien los infantes que no especifican su escolaridad, su sector de actividad, su nivel de ingresos, y la persona para la que trabaja.
+Para obtener la submuestra, filtramos por condición de cuestionario completado y por condición de ocupación para poder ver cuales son los infantes que contestaron el cuestionario, que son ocupados, filtramos también los infantes que no especifican su escolaridad, su sector de actividad, su nivel de ingresos, y la persona para la que trabaja.
 
 ## 
 
 ```{r descripcion base modelo, echo=FALSE}
-#cambiar base _submuestra
-base_modelo <- base_final %>% 
- filter(Cuestionario == "00" & Condicion_ocup != "4" & Nivel_escolaridad != "7" & Stor_actividad != "6" & Nivel_ingreso != "5" & Persona_bajo_trabajo != "4" & No_asistencia !="0")
+
+
+  base_modelo <- baseSDEM %>% 
+  filter(C_OCU!= "4"& R_DEF_CB == "00" & ASIS!="03") %>% 
+    dplyr::select(EDA1, SEX, ASIS, CTI, CQDOM, C_OCU, R_DEF_CB,N_ESC) 
+  
 
 
 base_modelo <- base_modelo %>% 
-  mutate(Condicion_t_infantil2 = case_when(Condicion_t_infantil == "2" ~ 3,
-                                           Condicion_t_infantil== "1" ~ 1,
-                                           Condicion_t_infantil=="3" ~3,
-                                           Condicion_t_infantil =="4"~4))
+  mutate(CTI2 = case_when(CTI == "2" ~ 3,
+                          CTI== "1" ~ 1,
+                          CTI=="3" ~3,
+                          CTI =="4"~4))
 
-describe(base_modelo, quant = c(0.25,0.75))
-
-
+knitr::kable(describe(base_modelo,na.rm = T,quant=c(0.25,0.75)))
 
 #No hay 2 en la nueva variable
 # 2%in%base_modelo$Condicion_t_infantil2 
@@ -142,21 +196,23 @@ describe(base_modelo, quant = c(0.25,0.75))
 
 ```
 
-Los datos de la submuestra se reduce a 1244 observaciones de infantes que se encuentran en condiciones de trabajo infantil. En la tabla se puede observar la estadistica descriptiva de los datos para la base que utilizaremos para estimar el modelo logistico multinomial. De igual manera, se transformo la variable de respuesta Condición de Trabajo Infantil (CTI) a una variable de 3 categorias para un mejor manejo y ajuste en el modelo. Los resultados más relevantes se presentan acontinuacion:
+Los datos de la submuestra se reduce a 6405 observaciones de infantes que se encuentran en condiciones de trabajo infantil. En la tabla se puede observar la estadística descriptiva de los datos para la base que utilizaremos para estimar el modelo logístico multinomial. De igual manera, se transformo la variable de respuesta Condición de Trabajo Infantil (CTI) a una variable de 3 categorías para un mejor manejo y ajuste en el modelo. Como se puede observar en la estadística descriptiva el 50% de los infantes ocupados de la submuestra se encuentran entre 14 y 17 años (EDA1), de igual manera solo el 50% de estos infantes ocupados asiste a la escuela (ASIS).
 
--   La variable Edad tiene un promedio de 2.55 y una mediana de 3 lo que implica que la mayoria de las observaciones se encuentran en un rango de edad de 15 a 17 años.
+Por otra parte la mediana de la asistencia a la escuela (ASIS) es 1 y la media 1.21, lo que nos indica que en promedio la mayoría de los niños que trabajan también asisten a la escuela, esto demuestra que no siempre la relación de trabajo infantil tiene que ser negativa con la de asistencia a la escuela.
 
--   La variable de No_asistencia explica la principal razon por la cual no asiste el infante a la escuela, en este caso la media y mediana apuntan que la mayor parte de los infantes no asisten por cuestiones de inseguridad, discriminación y distancia de la escuela (3) y por falta de interés, aptitud o requisitos para entrar a la escuela, en los valores para cuantiles podemos ver que el 50% de los datos se encuentra entre cuestiones de inseguridad, discriminación y distancia de la escuela (3) y por falta de recursos economicos (5).
+La condición de trabajo infantil (CTI), nuestra variable indicativa de si la situación de ocupación de un infante es apropiada o no, tiene una media de 1.41, y una mediana de 1 lo que indica que en promedio los infantes están ocupados en condiciones no permitidas y pocos están fuera del trabajo infantil.
 
--   El nivel de escolaridad demuestra que la mayoria de los infantes en condiciones de ocupación, llegaron a algun grado de secundaria o secundaria incompleta.
+La Condición de Quehaceres Domésticos (CQDOM) antes analizada indica que la mayoría de los infantes se encuentra en quehaceres domésticos e incluso la media en 1.82 indica que muchos infantes también podrían estar trabajando en horarios prolongados o ocupaciones peligrosas.
 
--   Para la variable tipo de apoyo, encontramos que la mayoria de los infantes no recibe ninguna clase de apoyo y el 50% se ubican en este nivel (5).
+En la condición de ocupación los datos son preocupantes, pues la mayoría de los infantes ocupados están en en ocupación no permitida o en ocupación peligrosa con una media de 2.47 y mediana de 3.
 
--   El 50% de los infantes de nuestra submuestra se encuentra al menos en ocupación no permitida infantil y en condicion de ocupación, la mayoria estan en ocupación no permitida, en ocupación peligrosa
+El nivel de escolaridad común entre los individuos de la submuestra es en promedio 4.25 lo que esta entre el nivel de secundaria incompleta (4) y secundaria completa (5).
 
-    # Modelo Logístico Multinomial
+La variable transformada CTI2 no presenta grandes cambios significativos en su distribución al unir dos de sus categorías y sin embargo presenta un mejor ajuste al modelo.
 
-Para este trabajo planteamos un modelo de regresioón logistica de la siguiente forma:
+## Modelo Logístico Multinomial
+
+Para este trabajo planteamos un modelo de regresión logística de la siguiente forma:
 
 $$
 Y =P(y_i = j | X_i) = \frac{e^{x_iB_j}}{1 + e^{x_iB_1}+e^{x_iB_2}+e^{x_iB_3}} ; 
@@ -167,19 +223,16 @@ En esta forma funcional se aprecia que el modelo logístico multinomial integra 
 
 1.  Solo en ocupación permitida
 
-2.  Solo en quehaceres domésticos en condiciones no adecuadas o en ocupación permitida.
+2.  Solo en quehaceres domésticos en condiciones no adecuadas o en ocupación no permitida.
 
 3.  Fuera de trabajo infantil.
 
-```{r Modelo, message=FALSE, include=FALSE, warning=FALSE}
-## Primer modelo
-
-multi1 = multinom(Condicion_t_infantil2 ~ Edad + Asistencia_esc + Nivel_escolaridad +Stor_actividad+Nivel_ingreso+ Persona_bajo_trabajo+ Tipo_apoyo,
-                  data=base_modelo)
-
+```{r modelo, echo=FALSE, message=FALSE, include=FALSE}
+multi1 = base_modelo %>% 
+  multinom(formula = CTI2 ~ EDA1+SEX + ASIS + CQDOM+C_OCU+N_ESC)
 ```
 
-```{r summary , message=FALSE, include=TRUE, warning=FALSE}
+```{r summary , message=FALSE, echo = FALSE, warning=FALSE}
 
 sum1 = summary(multi1)
 
@@ -192,52 +245,61 @@ pclass1 = rbind(sum1$coefficients[1,],sum1$standard.errors[1,],z1[1,],p1[1,])
 
 rownames(pclass1) <- c("Coeficientes","E. Estandar","Estadistico Z","p value")
 
-pclass1
-
-# knitr::kable(pclass1)
-
+knitr::kable(pclass1)
 
 
 ```
 
-En los resultados para los coeficientes del modelo podemos ver que la edad es una variable que impacta en la condicion de trabajo infantil de manera que a mayor sea la edad, mayor es la probabilidad de que esten en alguna ocupación o fuera del trabajo infantil, esto esta relacionado con el paper de Orraca (2014) y el orden de nacimiento de los hijos.
+Fuente: Elaboración propia. \| Nota: El grupo de referencia corresponde a la categoría en quehaceres domésticos en condiciones no adecuadas y en ocupación no permitida
 
-Por otro lado, las variables que afectan de manera negativa son la asistencia escolar, el nivel de escolaridad, el sector de actividad, y si recibe un tipo de apoyo, esta ultima con significancia estadistica. A su vez, la significancia del modelo se redujo en sus variables debido a la conjunción de la variable dependiente y creemos que tambien se debe a las filtraciones de la base que afectan la submuestra.
+En los resultados para los coeficientes del modelo podemos ver que la edad es una variable que impacta en la condición de trabajo infantil de manera que a mayor sea la edad, mayor es la probabilidad de que estén en alguna ocupación o fuera del trabajo infantil.
 
-Aunado a esto la mayoria de los estimadores no mostraron gran significancia estadistica más que contar con un apoyo ajeno, aunque el signo de los coeficientes y la relacion si se mostraron de manera logica. Es menester hacer enfasis en que estar contratado por alguna persona influyen en gran medida a que un infante este en condiciones laborales no aptas.
+Como se puede ver en la tabla resumen la mayoría de las variables son significativas a un nivel del 95% , esto indica que EDA1 y el orden de los hijos podrían ser factores de gran importancia a tomar en cuenta para futuras investigaciones, tal como investiga Orraca (2014), a su vez el sexo es una variable de alta significancia lo que indica que aumenta la probabilidad de estar en condición de trabajo infantil si se es hombre, en mayor medida que si se es mujer. El coeficiente de la asistencia es de 0.77 lo que indica que los infantes que estudian tienen mayor probabilidad de que estén en condición de trabajo infantil. De la misma manera la variable de condición de quehaceres domésticos tiene un coeficiente positivo de 0.668 lo que apunta que la probabilidad de estar en condiciones de trabajo infantil aumentan si realizas quehaceres domésticos. De manera significativa se ve que la condición de ocupación causa una disminución en la probabilidad de que el infante no este en condiciones adecuadas, esto indica que la mayoría de las ocupaciones que demandan infantes están en malas condiciones. Finalmente vemos la variable del nivel de escolaridad que apunta a que entre mayor sea el nivel de escolaridad, mayor es la probabilidad de que el infante este ocupado, esto también apunta a los resultados de trabajo-escuela siendo complementarios y no excluyentes.
 
 ## Resultados
 
 ### Efectos Marginales
 
 ```{r, echo=FALSE}
-exp(sum1$coefficients)
+exp(sum1$coefficients) %>% 
+  knitr::kable()
+
 
 ```
 
 Ahora procedemos a analizar los efectos marginales, en los que se aprecia que:
 
--   Si la edad crece hay 1.09 veces más probabilidad que el infante este en ocupación no permitida y quehaceres domesticos en condiciones no adecuadas, pero incrementa 29933 veces la probabilidad de que esten fuera del trabajo infantil
+-   Si la edad crece hay 2.10 veces más probabilidad que el infante este en ocupación no permitida y quehaceres domésticos en condiciones no adecuadas, pero incrementa 29933 veces la probabilidad de que estén fuera del trabajo infantil, esto remarca el hecho de la demanda por trabajo infantil en México aun es amplia y abarca los años de edad más cercanos a cuando los infantes van a cumplir la mayoría de edad.
 
--   La asistencia escolar no presenta un efecto marginal fuerte, también, decimos que la asistencia a la escuela aumenta en 0.086 la probabilidad de que este en condiciones de ocupacion no permitida, mientras que la asistencia escolar, de igual manera, no presenta un impacto considerable ya que aumenta en apenas 0.00000006572 veces la probabilidad de que este fuera del trabajo infantil.
+-   A su vez es 1.75 veces más probable que siendo hombre se este en condición de trabajo infantil.
 
--   El nivel de escolaridad causa que los infantes tengan 0.89 veces más probabilidad de que esten en ocupaciones no permitidas y quehaceres domesticos, mientras que tambien aumenta en 1.5 veces la probabilidad de que los encuestados esten fuera del trabajo infantil.
+-   La asistencia escolar presenta un efecto marginal fuerte ya que decimos que la asistencia a la escuela aumenta en 2.16 la probabilidad de que el infante este en condiciones de ocupación no permitida y quehaceres domésticos, sin embargo, si la asistencia crece solo incrementa en 0.42 veces la probabilidad de estar fuera de trabajo infantil.
 
--   Por su parte el nivel del sector de actividad nos dice que los cambios en los sectores incrementa en 0.98 veces la probabilidad de estar en condiciones no aptas, contra las 1.58 que aumenta su probabilidad de estar fuera de ellas.
+-   La condición de ocupación solo afecta de manera muy reducida en la probabilidad que no este en CTI.
 
--   Como es lógico el nivel de ingreso responde de manera positiva al trabajo, aumentando la probabilidad de estar en condiciones de empleo malas, pues se puede inferir que los infantes necesitan estos trabajos por sus necesidades socioeconomicas. Sin embargo, tambien afecta de manera positiva en estar fuera del trabajo infantil, lo que podria indicar que muchos infantes trabajan y luego dejan de hacerlo o estan en edades muy grandes.
+-   El nivel de escolaridad causa que los infantes tengan 1.3 veces más probabilidad de que estén en ocupaciones no permitidas y quehaceres domésticos, mientras que también aumenta en 0.72 veces la probabilidad de que los encuestados estén fuera del trabajo infantil. Los resultados son opuestos sin embargo esto podría apuntar a la tesis de que existen infantes que trabajan y estudian, y sus condiciones son riesgosas.
 
--   El hecho de que el infante este bajo la contratacion de una persona, aumenta sus probabilidades en 1.27 veces más de que sus condiciones de trabajo no sean aptas, pero, tambien aumenta en 1.60 a que esten fuera de estas condiciones, esto de manera significativa estadisticamente.
+-   La probabilidad aumenta 1.95 veces de estar en CTI cuando también se realizan quehaceres domésticos, y aumenta en menor medida la probabilidad de estar fuera de la condición.
 
--   Finalmente el hecho de que un infante tenga un tipo de apoyo, hace probable en 1.0 veces que se encuentre fuera de trabajo infantil, por lo que se encontraria en condiciones mejores ya que no necesita recibir el ingreso y puede obtener empleos con mejores condiciones. Asimismo, se dice que el hecho que reciba algun apoyo implica que su probabilidad es 0.829 veces más que este en condiciones no aptas.
+-   Como es lógico el nivel de ingreso responde de manera positiva al trabajo, aumentando la probabilidad de estar en condiciones de empleo malas, pues se puede inferir que los infantes necesitan estos trabajos por sus necesidades socioeconomicas. Sin embargo, también afecta de manera positiva en estar fuera del trabajo infantil, lo que podría indicar que muchos infantes trabajan y luego dejan de hacerlo o están en edades muy grandes.
 
-## Conclusiónes finales
+-   El hecho de que el infante este bajo la contratación de una persona, aumenta sus probabilidades en 1.27 veces más de que sus condiciones de trabajo no sean aptas, pero, también aumenta en 1.60 a que estén fuera de estas condiciones, esto de manera significativa estadísticamente.
 
-Basado en el trabajo aqui escrito, no tenemos suficiente evidencia para rechazar la hipotesis nula de que los regresores tienen algun efecto en la variable dependiente CTI, aunque dentro del modelo existieron variables significativas, la mayoria del modelo no muestra un buen ajuste y su prediccion no es buena.
+-   Finalmente el hecho de que un infante tenga un tipo de apoyo, hace probable en 1.0 veces que se encuentre fuera de trabajo infantil, por lo que se encontraría en condiciones mejores ya que no necesita recibir el ingreso y puede obtener empleos con mejores condiciones. Asimismo, se dice que el hecho que reciba algún apoyo implica que su probabilidad es 0.829 veces más que este en condiciones no aptas.
 
-Basado en el estudio de la ENTI, podemos rescatar que, aun existen una gran cantidad de infantes que tienen condiciones laborales que moralmente y juridicamente deben desaparecer, por ello se propone mayores refuerzos especialmente para politicas publicas enfocadas a las familias numerosas en cuanto a asistencia economico-social, pues como se ha visto estos factores son los mayores determinantes a la hora de que los niños se encuentren en un ambiente pleno o se inserten al estudio, y si llegaran a estar en una ocupación, que esta fuera digna y sin condiciones de peligro.
 
-Otra propuesta es la de el fomento a la educación basica, pues como ya se ha dicho esta variable tambien es importante a la hora de y media superior pues la mayor parte de los infantes que laboran estan en un nivel educativo de secundaria o secundaria incompleta.
+
+## Conclusiones finales
+
+El trabajo infantil en México ha representado un grave problema, tanto es así que en el 2019 más de 60 mil niños en México trabajaban al menos 14 horas. Los determinantes del trabajo infantil son diversos pero en este trabajo se encuentra relación entre los infantes en condiciones de trabajo infantil y  su edad, si asisten o no a la escuela y la condiciones laborales de los infantes, al comprobar los resultados vemos que todas demuestran ser clave en el análisis de la problemática. Los resultados del modelo logístico multinomial son significativos de manera estadística y apuntan a una estrecha relación de la edad de los hijos y la asistencia a la escuela con aceptar condiciones laborales que no son optimas para los infantes algo que apunta a las investigaciones mencionadas lineas arriba como la de Orraca (2014). Es menester continuar la investigación en este ámbito para generar política publica que apunte a disminuir y erradicar las condiciones de explotación laboral que existen contra los infantes y que en algunos casos son condiciones de peligro.
+
+Basado en el estudio de la ENTI, podemos rescatar que, aun existen una gran cantidad de infantes que tienen condiciones laborales que moralmente y jurídicamente deben desaparecer, por ello se propone mayores refuerzos especialmente para políticas publicas enfocadas a las familias numerosas en cuanto a asistencia económico-social, pues como se ha visto estos factores son los mayores determinantes a la hora de que los niños se encuentren en un ambiente pleno o se inserten al estudio, y si llegaran a estar en una ocupación, que esta fuera digna y sin condiciones de peligro.
+
+Otra propuesta es la de el fomento a la educación por medio de becas, apoyos, promover politicas publicas para el incremento en el salario a nivel nacional en especial para personas con familias numerosas, pues como ya se ha dicho esta variable también es importante a la hora de y media superior pues la mayor parte de los infantes que laboran están en un nivel educativo de secundaria o secundaria incompleta.
+
+Además se debe de considerar los factores estructurales del sistema económico y sus contradicciones, así como el hecho de que exista una por trabajo infantil en las actividades diarias de las familias, tanto en quehaceres como en trabajos fuera del hogar los infantes aun necesitan ir a trabajar ya sea para mantener sus estudios (o los de familiares), o mantener sus hogares. En la sociedad mexicana aun existe una gran demanda de fuerza de trabajo infantil lo que implica a su vez mayor explotación infantil. Para asegurar a las personas una vida digna se debe también encontrar las causas que impiden este logro para poder enfocar los esfuerzos de mejor manera.
+
+
 
 ### Referencias
 
@@ -249,13 +311,15 @@ Otra propuesta es la de el fomento a la educación basica, pues como ya se ha di
 
 -   Bureau of International Labor Affairs. (2020), *2020 Findings on the Worst Forms of Child Labor.* Estados Unidos. Recuperado de: <https://ahifores.com/wp-content/uplo>ads/2021/04/Hallazgos-de-2019-sobre-las-peores-formas-de-trabajo-infantil-Mexico.pdf
 
+-   Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables. R package version 5.2.3. <https://CRAN.R-project.org/package=stargazer>
+
 -   INEGI. (2020), *Encuesta Nacional de Trabajo Infantil (ENTI) 2019. Presentación de Resultados.* México. Recuperado de: <https://www.inegi.org.mx/contenidos/programas/enti/2019/doc/enti_2019_presentacion_resultados.pdf>
 
--   INEGI. (2019), *Encuesta Nacional de Trabajo Infantil 2019.* Microdatos. Catalogo de Datos. Recuperado de :<https://www.inegi.org.mx/contenidos/programas/enti/2019/microdatos/enti_2019_fd.pdf>
+-   INEGI. (2019), *Encuesta Nacional de Trabajo Infantil 2019.* Microdatos. Catalogo de Datos. Recuperado de: <https://www.inegi.org.mx/contenidos/programas/enti/2019/microdatos/enti_2019_fd.pdf>
 
 -   INEGI. (2019), *Encuesta Nacional de Trabajo Infantil 2019.* Microdatos. Recuperado de: <https://www.inegi.org.mx/programas/enti/2019/#Microdatos>
 
--   Orraca, P. (2014) El trabajo infantil en México y sus causas, problemas de desarrollo. volúmen 45, p. 113-137. Recuperado de : <https://www.sciencedirect.com/science/article/pii/S0301703614708788>
+-   Orraca, P. (2014) El trabajo infantil en México y sus causas, problemas de desarrollo. volúmen 45, p. 113-137. Recuperado de: <https://www.sciencedirect.com/science/article/pii/S0301703614708788>
 
 -   Vladez, M. (2018). *Trabajo en la infancia en los ámbitos doméstico y extradoméstico: una aproximación desde las características de los hogares.* México 2015 - ProQuest. (2018, julio). COLMEX. Recuperado de: <https://www.proquest.com/openview/de424e4d4269e0f0b62fb251c007d392/1?pq-origsite=gscholar&cbl=18750&diss=y>
 
