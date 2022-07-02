@@ -10,14 +10,14 @@ Para la reproducibilidad del modelo deben usarse los microdatos de la Encuesta N
 https://www.inegi.org.mx/programas/enti/2019/#Microdatos
 
 # Resultados 
-![Trabajo Infantil en México; Horas en quehaceres domesticos](images\Trabajo Infantil en México; Horas en quehaceres domesticos.png)
+! [Trabajo Infantil en México; Horas en quehaceres domesticos](images\Trabajo Infantil en México; Horas en quehaceres domesticos.png)
 Vemos que, de los datos proporcionados por el INEGI (sin filtrar), en 2019 la cantidad de infantes que trabajaban al menos 14 horas era de 58,158 y más preocupante es que existan aún las 2602 observaciones que están trabajando de entre 14 y 28 horas.
 
-![Trabajo Infantil en México; Condicion de quehaceres domesticos](images\Trabajo Infantil en México; Condicion de quehaceres domesticos.png)
+! [Trabajo Infantil en México; Condicion de quehaceres domesticos](images\Trabajo Infantil en México; Condicion de quehaceres domesticos.png)
 
 En la segunda gráfica podemos ver más claramente como en la condición de quehaceres domésticos tanto hombres como mujeres se encuentran en quehaceres domésticos con condiciones adecuadas, sin embargo es preocupante observar que aun más de 500 infantes de la submuestra se encuentran en horarios prolongados o condiciones peligrosas. Finalmente podemos ver que las mujeres son menos propensas a estar exentas de trabajo domestico.
 
-![Trabajo Infantil en México; Edades de niños ocupados, por sexo](images\Trabajo Infantil en México;  Edades de niños ocupados.png)
+! [Trabajo Infantil en México; Edades de niños ocupados, por sexo](images\Trabajo Infantil en México;  Edades de niños ocupados.png)
 La tercera gráfica nos demuestra la relación de la edad de los infantes con su condición de ocupación. Entre mayor edad, existe una mayor cantidad de niños ocupados, es decir que la economía requiere de fuerza de trabajo infantil y cada que se acercan a su edad propia para trabajar como adultos, se demanda mayor cantidad del mismo, aun en condiciones impropias.
 
 ## Efectos Marginales del modelo logistico multinomial
