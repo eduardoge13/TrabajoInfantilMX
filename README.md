@@ -17,7 +17,7 @@ Vemos que, de los datos proporcionados por el INEGI (sin filtrar), en 2019 la ca
 
 En la segunda gráfica podemos ver más claramente como en la condición de quehaceres domésticos tanto hombres como mujeres se encuentran en quehaceres domésticos con condiciones adecuadas, sin embargo es preocupante observar que aun más de 500 infantes de la submuestra se encuentran en horarios prolongados o condiciones peligrosas. Finalmente podemos ver que las mujeres son menos propensas a estar exentas de trabajo domestico.
 
-! [Trabajo Infantil en México; Edades de niños ocupados, por sexo](images\Trabajo Infantil en México;  Edades de niños ocupados.png)
+! [Trabajo Infantil en México; Edades de niños ocupados, por sexo](https://raw.githubusercontent.com/eduardoge13/TrabajoInfantilMX/main/images/Trabajo%20Infantil%20en%20México%3B%20%20Edades%20de%20niños%20ocupados.png)
 La tercera gráfica nos demuestra la relación de la edad de los infantes con su condición de ocupación. Entre mayor edad, existe una mayor cantidad de niños ocupados, es decir que la economía requiere de fuerza de trabajo infantil y cada que se acercan a su edad propia para trabajar como adultos, se demanda mayor cantidad del mismo, aun en condiciones impropias.
 
 ## Efectos Marginales del modelo logistico multinomial
