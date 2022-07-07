@@ -44,7 +44,7 @@ La tercera gráfica nos demuestra la relación de la edad de los infantes con su
 
 ## Conclusiones finales
 
-Basado en el trabajo aquí escrito, no tenemos suficiente evidencia para rechazar la hipótesis nula de que los regresores tienen algún efecto en la variable dependiente CTI, aunque dentro del modelo existieron variables significativas, la mayoría del modelo no muestra un buen ajuste y su predicción no es buena.
+Basado en el trabajo aquí escrito, tenemos suficiente evidencia para rechazar la hipótesis nula y por tanto los determinantes o regresores tienen, ciertamente, algún efecto en la variable dependiente CTI,  dento del modelo la mayor parte de las variables son significativas a un grado alto, la mayoría del modelo muestra un buen ajuste y su predicción es buena aunque mayores investigaciones son necesarias para analizar el nivel de efecto que tiene el orden de los hijos entre otras nuevas construcciones que han demostrado ser determinantes de igual forma.
 
 Basado en el estudio de la ENTI, podemos rescatar que, aun existen una gran cantidad de infantes que tienen condiciones laborales que moralmente y jurídicamente deben desaparecer, por ello se propone mayores refuerzos especialmente para políticas publicas enfocadas a las familias numerosas en cuanto a asistencia económico-social, pues como se ha visto estos factores son los mayores determinantes a la hora de que los niños se encuentren en un ambiente pleno o se inserten al estudio, y si llegaran a estar en una ocupación, que esta fuera digna y sin condiciones de peligro.
 
