@@ -1,4 +1,8 @@
 # TrabajoInfantil MX
+
+[![DOI](https://zenodo.org/badge/506083629.svg)](https://zenodo.org/badge/latestdoi/506083629)
+
+
 En este repositorio se realiza un análisis de la Encuesta Nacional de Trabajo Infantil en México 2019, se hacen esfuerzos econométricos para determinar las causas de las condiciones de ocupacion infantil segun las definiciones del INEGI.
 
 # Resumen
